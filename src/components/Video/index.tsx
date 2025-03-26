@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import Plyr from 'plyr';
 import "./index.css"
+import "plyr/dist/plyr.css";
 
 function Video() {
-  const playerRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<HTMLVideoElement | null>(null);
   const { data } = useQuery<VideoType>({
     queryKey: ['video'],
     queryFn: getVideo,
@@ -42,8 +43,8 @@ function Video() {
   // }, [data]);
 
   return (
-    <div className="flex justify-center items-center w-full bg-transparent bg-gray-800">
-      <video src={data?.url} width={576} height={200}  crossOrigin="anonymous" playsInline poster="/poster.png" id="player">
+    <div className="flex justify-center items-center w-full mt-5">
+      <video src={data?.url} width={576} ref={playerRef} controls crossOrigin="anonymous" playsInline poster="/poster.png" id="player">
       </video>
     </div>
   );

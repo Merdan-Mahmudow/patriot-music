@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
-body {
-  background-image: url("../assets/background_image.JPEG");
+body{
+    background-image: url("../assets/background_image.JPEG");
 }

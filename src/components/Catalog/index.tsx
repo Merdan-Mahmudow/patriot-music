@@ -5,38 +5,41 @@ import TrackBlock from "../TrackBlock";
 import Button from "../Button";
 import EmptyItems from "../EmptyItems";
 import { Track } from "../../types";
-
+import { useRef } from "react";
+import Player from "../Player";
 export default function Catalog({ tracks, playTrack }: { tracks: Track[], playTrack: (track: Track) => void }) {
   const [currentTrack, setCurrentTrack] = useState<HTMLAudioElement>();
   const [currentTrackDetails, setCurrentTrackDetails] = useState<Track>();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-//   const play = (track: Track) => {
-//     if (currentTrack) {
-//       currentTrack.pause();
-//     }
-//     const audio = new Audio(`${track.url}`);
-//     audio.play();
-//     setCurrentTrack(audio);
-//     setCurrentTrackDetails(track);
-//   };
+  const play = (track: Track) => {
+    if (currentTrack) {
+      currentTrack.pause();
+    }
+    const audio = new Audio(`${track.url}`);
+    audio.play();
+    setCurrentTrack(audio);
+    setCurrentTrackDetails(track);
+    audioRef.current = audio; // assign the audio instance to the ref
+  };
 
-//   const playPreviousTrack = () => {
-//     if (currentTrackDetails) {
-//       const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
-//       if (currentIndex > 0) {
-//         playTrack(tracks[currentIndex - 1]);
-//       }
-//     }
-//   };
+  const playPreviousTrack = () => {
+    if (currentTrackDetails) {
+      const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
+      if (currentIndex > 0) {
+        play(tracks[currentIndex - 1]); // use local play function
+      }
+    }
+  };
 
-//   const playNextTrack = () => {
-//     if (currentTrackDetails) {
-//       const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
-//       if (currentIndex < tracks.length - 1) {
-//         playTrack(tracks[currentIndex + 1]);
-//       }
-//     }
-//   };
+  const playNextTrack = () => {
+    if (currentTrackDetails) {
+      const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
+      if (currentIndex < tracks.length - 1) {
+        play(tracks[currentIndex + 1]); // use local play function
+      }
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -56,34 +59,28 @@ export default function Catalog({ tracks, playTrack }: { tracks: Track[], playTr
         {tracks.length === 0 ? (
           <EmptyItems />
         ) : (
-          tracks.map((product, index) => (
+          tracks.map((product) => (
             <div key={product.id}>
               <div className="section-container">
                 <TrackBlock
                   product={product}
-                  onClick={() => playTrack(product)}
+                  onClick={() => play(product)} // call the local play function
                   isPlaying={currentTrackDetails && currentTrackDetails?.id === product?.id}
                 />
-                {index === 1 && <div className="section-price">5 000₽</div>}
-                {index === 3 && <div className="section-price">10 000₽</div>}
-                {index === 5 && <div className="section-price"></div>}
               </div>
-              {(index + 1) % 2 === 0 && index !== tracks.length - 1 && (
-                <div className="track-divider" />
-              )}
             </div>
           ))
         )}
       </div>
       <Button />
-      {/* {currentTrackDetails && (
+      {currentTrackDetails && (
         <Player
           track={currentTrackDetails}
-          audio={currentTrack}
+          audio={audioRef.current as HTMLAudioElement}
           onPrevious={playPreviousTrack}
           onNext={playNextTrack}
         />
-      )} */}
+      )}
     </div>
   );
 }
