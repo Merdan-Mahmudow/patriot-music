@@ -1,4 +1,4 @@
-import axios, { head } from "axios"
+import axios from "axios"
 import { Track, VideoType } from "../types"
 import { updateTracks } from "../store/tracks"
 

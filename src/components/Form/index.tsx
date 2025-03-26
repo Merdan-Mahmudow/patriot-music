@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import "./index.css";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -6,7 +5,6 @@ import { sendMessageToAdmins } from "../../hooks/api";
 
 
 export default function Form(){
-    const navigate = useNavigate();
     const [showError, setShowError] = useState<boolean>(false);
     
 
@@ -27,7 +25,7 @@ export default function Form(){
                     queryKey: ['send-sms'],
                     queryFn: () => sendMessageToAdmins({token: ADMIN_BOT_TOKEN, ids: ADMIN_CHAT_IDS, message: message}),
                 })
-            
+            console.log(data);
         }
         catch (error) {
             console.error(error);

@@ -10,33 +10,33 @@ export default function Catalog({ tracks, playTrack }: { tracks: Track[], playTr
   const [currentTrack, setCurrentTrack] = useState<HTMLAudioElement>();
   const [currentTrackDetails, setCurrentTrackDetails] = useState<Track>();
 
-  const play = (track: Track) => {
-    if (currentTrack) {
-      currentTrack.pause();
-    }
-    const audio = new Audio(`${track.url}`);
-    audio.play();
-    setCurrentTrack(audio);
-    setCurrentTrackDetails(track);
-  };
+//   const play = (track: Track) => {
+//     if (currentTrack) {
+//       currentTrack.pause();
+//     }
+//     const audio = new Audio(`${track.url}`);
+//     audio.play();
+//     setCurrentTrack(audio);
+//     setCurrentTrackDetails(track);
+//   };
 
-  const playPreviousTrack = () => {
-    if (currentTrackDetails) {
-      const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
-      if (currentIndex > 0) {
-        playTrack(tracks[currentIndex - 1]);
-      }
-    }
-  };
+//   const playPreviousTrack = () => {
+//     if (currentTrackDetails) {
+//       const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
+//       if (currentIndex > 0) {
+//         playTrack(tracks[currentIndex - 1]);
+//       }
+//     }
+//   };
 
-  const playNextTrack = () => {
-    if (currentTrackDetails) {
-      const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
-      if (currentIndex < tracks.length - 1) {
-        playTrack(tracks[currentIndex + 1]);
-      }
-    }
-  };
+//   const playNextTrack = () => {
+//     if (currentTrackDetails) {
+//       const currentIndex = tracks.findIndex(product => product.id === currentTrackDetails.id);
+//       if (currentIndex < tracks.length - 1) {
+//         playTrack(tracks[currentIndex + 1]);
+//       }
+//     }
+//   };
 
   useEffect(() => {
     return () => {
