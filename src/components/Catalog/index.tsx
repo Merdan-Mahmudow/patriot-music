@@ -7,6 +7,8 @@ import EmptyItems from "../EmptyItems";
 import { Track } from "../../types";
 import { useRef } from "react";
 import Player from "../Player";
+
+
 export default function Catalog({ tracks, playTrack }: { tracks: Track[], playTrack: (track: Track) => void }) {
   const [currentTrack, setCurrentTrack] = useState<HTMLAudioElement>();
   const [currentTrackDetails, setCurrentTrackDetails] = useState<Track>();
@@ -44,7 +46,7 @@ export default function Catalog({ tracks, playTrack }: { tracks: Track[], playTr
   useEffect(() => {
     return () => {
       if (currentTrack) {
-        currentTrack.pause();
+        currentTrack?.pause();
       }
     };
   }, [currentTrack]);
