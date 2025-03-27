@@ -1,36 +1,39 @@
 import "./index.css";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { sendMessageToAdmins } from "../../hooks/api";
-
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function Form(){
+  const navigate = useNavigate();
     const [showError, setShowError] = useState<boolean>(false);
-    
-
+    const ADMIN_BOT_TOKEN = import.meta.env.VITE_ADMIN_BOT_TOKEN;
+    const ADMIN_CHAT_IDS = import.meta.env.VITE_ADMIN_CHAT_IDS?.split(',') as string[];
+    const { mutateAsync: sendMessage } = useMutation({
+      mutationFn: sendMessageToAdmins,
+    });
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (!e.currentTarget.checkValidity()){
-            setShowError(true);
-            return;
-        }
-        const formData = new FormData(e.currentTarget);
-        const form = Object.fromEntries(formData.entries());
-        const message = `🔔 *Новая заявка!*\n\n👤 *Контактные данные:*\n\n▫️ Имя: ${form.name}\n▫️ Email: ${form.email}\n▫️ Телефон: ${form.phone}\n▫️ Телеграм: ${form.telegram || 'Не указан'}`;
-
-        try {
-            const ADMIN_BOT_TOKEN = process.env.REACT_APP_ADMIN_BOT_TOKEN;
-            const ADMIN_CHAT_IDS = process.env.REACT_APP_ADMIN_CHAT_IDS?.split(',') as string[];
-            const data = useQuery({
-                    queryKey: ['send-sms'],
-                    queryFn: () => sendMessageToAdmins({token: ADMIN_BOT_TOKEN, ids: ADMIN_CHAT_IDS, message: message}),
-                })
-            console.log(data);
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }
+      e.preventDefault();
+      if (!e.currentTarget.checkValidity()) {
+          setShowError(true);
+          return;
+      }
+  
+      const formData = new FormData(e.currentTarget);
+      const form = Object.fromEntries(formData.entries());
+      const message = `🔔 *Новая заявка!*\n\n👤 *Контактные данные:*\n\n▫️ Имя: ${form.name}\n▫️ Email: ${form.email}\n▫️ Телефон: ${form.phone}\n▫️ Телеграм: ${form.telegram || 'Не указан'}`;
+  
+      try {
+           await sendMessage({ 
+              token: ADMIN_BOT_TOKEN, 
+              ids: ADMIN_CHAT_IDS, 
+              message 
+          });
+          navigate({to: '/pricing', replace: true});
+      } catch (error) {
+          console.error('Ошибка при отправке сообщения:', error);
+      }
+  };
 
     return (
         <div className="form-card1">
@@ -60,6 +63,7 @@ export default function Form(){
                 onInvalid={(e) =>
                   e.currentTarget.setCustomValidity("Пожалуйста, заполните поле 'Email'")
                 }
+                aria-required="true"
                 onInput={(e) => e.currentTarget.setCustomValidity('')}
               />
             </div>
@@ -73,6 +77,7 @@ export default function Form(){
                 onInvalid={(e) =>
                   e.currentTarget.setCustomValidity("Пожалуйста, заполните поле 'Номер телефона'")
                 }
+                aria-required="true"
                 onInput={(e) => e.currentTarget.setCustomValidity('')}
               />
             </div>

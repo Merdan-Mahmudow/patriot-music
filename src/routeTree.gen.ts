@@ -11,9 +11,30 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SurveyIndividualImport } from './routes/survey-individual'
+import { Route as SurveyImport } from './routes/survey'
+import { Route as PricingImport } from './routes/pricing'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const SurveyIndividualRoute = SurveyIndividualImport.update({
+  id: '/survey-individual',
+  path: '/survey-individual',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SurveyRoute = SurveyImport.update({
+  id: '/survey',
+  path: '/survey',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PricingRoute = PricingImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,6 +53,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingImport
+      parentRoute: typeof rootRoute
+    }
+    '/survey': {
+      id: '/survey'
+      path: '/survey'
+      fullPath: '/survey'
+      preLoaderRoute: typeof SurveyImport
+      parentRoute: typeof rootRoute
+    }
+    '/survey-individual': {
+      id: '/survey-individual'
+      path: '/survey-individual'
+      fullPath: '/survey-individual'
+      preLoaderRoute: typeof SurveyIndividualImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +81,47 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
+  '/survey': typeof SurveyRoute
+  '/survey-individual': typeof SurveyIndividualRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
+  '/survey': typeof SurveyRoute
+  '/survey-individual': typeof SurveyIndividualRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/pricing': typeof PricingRoute
+  '/survey': typeof SurveyRoute
+  '/survey-individual': typeof SurveyIndividualRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/pricing' | '/survey' | '/survey-individual'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/pricing' | '/survey' | '/survey-individual'
+  id: '__root__' | '/' | '/pricing' | '/survey' | '/survey-individual'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PricingRoute: typeof PricingRoute
+  SurveyRoute: typeof SurveyRoute
+  SurveyIndividualRoute: typeof SurveyIndividualRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PricingRoute: PricingRoute,
+  SurveyRoute: SurveyRoute,
+  SurveyIndividualRoute: SurveyIndividualRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +134,23 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/pricing",
+        "/survey",
+        "/survey-individual"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/pricing": {
+      "filePath": "pricing.tsx"
+    },
+    "/survey": {
+      "filePath": "survey.tsx"
+    },
+    "/survey-individual": {
+      "filePath": "survey-individual.tsx"
     }
   }
 }

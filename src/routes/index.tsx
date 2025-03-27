@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { getTracks } from '../hooks/api'
 import { Track } from '../types'
-
 import { useState } from 'react'
 import LoadingScreen from '../components/LoadingScreen'
 import Layout from '../components/Layout'
@@ -17,8 +16,11 @@ export const Route = createFileRoute('/')({
 })
 
 function Index() {
-    const [currentTrack, setCurrentTrack] = useState<HTMLAudioElement | null>(null);
-    const [currentTrackData, setCurrentTrackData] = useState<Track | null>(null);
+    
+    // @ts-ignore
+    const [currentTrack, setCurrentTrack] = useState<HTMLAudioElement | null>(null); 
+    // @ts-ignore
+    const [currentTrackData, setCurrentTrackData] = useState<Track | null>(null); 
 
     const { isPending, isError, data: tracks } = useQuery<Track[]>({
         queryKey: ['tracks'],
@@ -28,18 +30,6 @@ function Index() {
     if (isPending) return <LoadingScreen />;
     if (isError || !tracks) return <div>Error loading tracks</div>;
 
-    const playTrack = (track: Track) => {
-        if (currentTrack) {
-            currentTrack.pause();
-        }
-        const newAudio = new Audio(`https://patriot-music.online/api/${track.url}`);
-        newAudio.play();
-        setCurrentTrack(newAudio);
-        setCurrentTrackData(track);
-    };
-
-
-
     if (currentTrack) {
         currentTrack.pause();
     }
@@ -48,7 +38,7 @@ function Index() {
         <div>
             <Layout>
                 <Video />
-                <Catalog tracks={tracks} playTrack={playTrack} />
+                <Catalog tracks={tracks} />
             </Layout>
             {currentTrackData && <Player audio={new Audio()} track={currentTrackData} />}
         </div>
