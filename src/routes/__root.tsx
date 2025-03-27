@@ -11,7 +11,7 @@ export const Route = createRootRoute({
 
 function MainApp() {
     const { tg } = useTelegram()
-    const allowedPlatforms = ['android', 'ios'];
+    const allowedPlatforms = ['android', 'ios', 'unknown'];
     useEffect(() => {
         tg.WebApp.expand();
         tg.WebApp.BackButton.hide()
