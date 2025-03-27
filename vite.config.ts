@@ -12,4 +12,7 @@ export default defineConfig({
     tailwindcss(),
     // ...,
   ],
+  server: {
+    allowedHosts: ["skyrodev.ru"]
+  }
 })
