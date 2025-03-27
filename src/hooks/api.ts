@@ -28,3 +28,4 @@ export const sendMessageToAdmins = async ({message, token, ids}: {message: strin
     }))
     return await responses 
 }
+
