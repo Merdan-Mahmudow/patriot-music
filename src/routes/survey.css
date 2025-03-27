@@ -25,7 +25,15 @@
   border: 1px solid #ddd;
   border-radius: 4px;
 } */
-
+label{
+  color: white;
+}
+label.active{
+  color: black;
+}
+legend{
+  color: white;
+}
 .survey-form .error {
     color: red;
     font-size: 0.875rem;

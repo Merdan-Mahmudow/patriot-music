@@ -81,14 +81,14 @@ function Survey() {
           </h2>
           <div className="w-full px-4 py-5 bg-[rgba(44,44,44,0.8)] flex flex-col gap-3 rounded-md shadow-[0px_0px_15px_rgba(0,0,0,0.09)]">
             <legend className="text-lg font-semibold mb-3 select-none text-white">
-              1 Кто заполняет форму?
+              1. Кто заполняет форму?
             </legend>
             <label
               htmlFor="option1"
               className={`font-medium h-14 relative hover:bg-zinc-100 flex items-center px-3 gap-3 rounded-lg select-none ${
                 formData?.formRole === "Я солдат, хочу песню о себе"
-                  ? "text-black bg-blue-50 ring-blue-300 ring-1"
-                  : ""
+                  ? "text-black bg-blue-50 ring-blue-300 ring-1 active"
+                  : "text-white"
               }`}
               onClick={() =>
                 setFormData({
@@ -122,8 +122,8 @@ function Survey() {
               className={`font-medium h-14 relative hover:bg-zinc-100 flex items-center px-3 gap-3 rounded-lg select-none ${
                 formData?.formRole ===
                 "Я близкий человека (жена, мать, отец, друг)"
-                  ? "text-black bg-blue-50 ring-blue-300 ring-1"
-                  : ""
+                  ? "text-black bg-blue-50 ring-blue-300 ring-1 active"
+                  : "text-white"
               }`}
               onClick={() =>
                 setFormData({
@@ -157,8 +157,8 @@ function Survey() {
               htmlFor="option3"
               className={`font-medium h-14 relative hover:bg-zinc-100 flex items-center px-3 gap-3 rounded-lg select-none ${
                 formData?.formRole === "Я сослуживец"
-                  ? "text-black bg-blue-50 ring-blue-300 ring-1"
-                  : ""
+                  ? "text-black bg-blue-50 ring-blue-300 ring-1 active"
+                  : "text-white"
               }`}
               onClick={() =>
                 setFormData({ ...formData, formRole: "Я сослуживец" })
@@ -194,8 +194,8 @@ function Survey() {
               htmlFor="option1_song"
               className={`font-medium h-14 relative hover:bg-zinc-100 flex items-center px-3 gap-3 rounded-lg select-none ${
                 formData?.songFor === "Для солдата на передовой"
-                  ? "text-black bg-blue-50 ring-blue-300 ring-1"
-                  : ""
+                  ? "text-black bg-blue-50 ring-blue-300 ring-1 active"
+                  : "text-white"
               }`}
               onClick={() =>
                 setFormData({
@@ -228,7 +228,7 @@ function Survey() {
               htmlFor="option2_song"
               className={`font-medium h-14 relative hover:bg-zinc-100 flex items-center px-3 gap-3 rounded-lg select-none ${
                 formData?.songFor === "От солдата близким"
-                  ? "text-black bg-blue-50 ring-blue-300 ring-1"
+                  ? "text-black bg-blue-50 ring-blue-300 ring-1 active"
                   : ""
               }`}
               onClick={() =>
@@ -259,7 +259,7 @@ function Survey() {
               htmlFor="option3_song"
               className={`font-medium h-14 relative hover:bg-zinc-100 flex items-center px-3 gap-3 rounded-lg select-none ${
                 formData?.songFor === "Чтобы увековечить свою историю"
-                  ? "text-black bg-blue-50 ring-blue-300 ring-1"
+                  ? "text-black bg-blue-50 ring-blue-300 ring-1 active"
                   : ""
               }`}
               onClick={() =>
