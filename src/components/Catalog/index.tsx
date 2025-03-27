@@ -6,6 +6,7 @@ import EmptyItems from "../EmptyItems";
 import { Track } from "../../types";
 import { useRef } from "react";
 import Player from "../Player";
+import '../../fonts/Monomakh/fonts.css';
 
 
 export default function Catalog({ tracks }: { tracks: Track[] }) {
